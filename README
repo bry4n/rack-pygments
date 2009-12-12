@@ -1,0 +1,83 @@
+Rack::Pygments
+--------------
+
+A rack middleware for Pygments, the syntax highlighter
+
+It will work with any rack based app and Rails app.
+
+
+Requirements:
+-------------
+
+  - Rack (http://rack.rubyforge.org)
+  - Pygments (http://pygments.org/)
+
+
+Install Pygments:
+-----------------
+
+  easy_install pygments
+
+
+Install Rack::Pygments
+----------------------
+
+  sudo gem install rack-pygments -s http://gemcutter.org/
+
+
+Options (OPTIONAL):
+--------
+
+:html_tag   - set html tag (default: highlight)
+
+  Example #1: :html_tag => "hl:code"    #=> <hl:code lang="bash"></hl:code> 
+  Example #2: :html_tag => "colorful"   #=> <colorfulcode lang="bash"></colorful>
+ 
+:html_attr  - set html tag's attribute (default: lang)
+
+  Example #1: :html_attr => "style"     #=> <highlight style="bash"></highlight>
+  Example #2: :html_attr => "lexer"     #=> <highlight lexer="python"></highlight>
+
+
+Example:
+---------
+
+config.ru:
+
+
+  require "app"
+  require "rack/pygments"
+
+  use Rack::Pygments, :html_tag => "highlight",
+                      :html_attr => "lang"
+
+  run Sinatra::Application
+
+
+app.rb:
+
+
+require "sinatra"
+
+  get "/" do
+    erb :colorme
+  end
+
+  __END__
+
+  @colorme
+
+  <highlight lang="ruby">
+
+    def hello(name)
+      puts "Hello #{name.capitalize}!"
+    end
+
+  </highlight>
+
+  <highlight lang="python">
+    
+    def hello(name):
+        print "Hello %s!" % name
+
+  </highlight>
