@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
  
  s.name    	= 'rack-pygments'
  s.version	= '0.1'
- s.description	= "rack-pygments - Rack Middle for Pygments, the syntax highlighter"
+ s.description	= "rack-pygments - Rack Middleware for Pygments, the syntax highlighter"
  s.summary	= "rack-pygments"
  
  s.authors	= ['Bryan Goines']

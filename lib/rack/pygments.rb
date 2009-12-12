@@ -15,19 +15,22 @@ module Rack
     end
     
     def call(env)
+      if env["PATH_INFO"] !~ /.*\.css$/
       status, headers, response = @app.call(env)
       content = response.instance_variable_get("@body").to_s
-      document = Nokogiri::HTML(content)
-      nodes = document.css(@tag)
-      nodes.each do |node|
-        lang = node.attribute(@attr).nil? ? 'bash' : node.attribute(@attr).value
-        pygmentize = `echo '#{node.content}' | #{@bin} -l #{lang} -f html`
-        node.replace(Nokogiri::HTML(pygmentize).css("div.highlight").first)
+        document = Nokogiri::HTML(content)
+        nodes = document.css(@tag)
+        nodes.each do |node|
+          lang = node.attribute(@attr).nil? ? 'bash' : node.attribute(@attr).value
+          pygmentize = `echo '#{node.content}' | #{@bin} -l #{lang} -f html`
+          node.replace(Nokogiri::HTML(pygmentize).css("div.highlight").first)
+        end
+        response = document.to_s
+        headers["Content-Length"] = response.length.to_s
+        [status,headers,[response]]
+      else
+        @app.call(env)
       end
-      response = document.to_s
-      headers["Content-Length"] = response.length.to_s
-      [status,headers,[response]]
     end
-
   end
 end
