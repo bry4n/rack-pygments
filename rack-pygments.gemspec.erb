@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
  s.rubyforge_project = 'rack-pygments'
  s.rubygems_version = '1.3.1'
  s.add_dependency("rack")
+ s.add_dependency("nokogiri")
  s.platform = Gem::Platform::RUBY
 end

@@ -11,7 +11,13 @@ Requirements:
 
   - Rack (http://rack.rubyforge.org)
   - Pygments (http://pygments.org/)
+  - Nokogiri (http://nokogiri.org/)
 
+
+Install Nokogirl:
+-----------------
+
+  sudo gem install nokogiri -s http://gemcutter.org/
 
 Install Pygments:
 -----------------
