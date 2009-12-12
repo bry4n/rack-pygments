@@ -14,7 +14,7 @@ Requirements:
   - Nokogiri (http://nokogiri.org/)
 
 
-Install Nokogirl:
+Install Nokogiri:
 -----------------
 
   sudo gem install nokogiri -s http://gemcutter.org/
@@ -37,7 +37,7 @@ Options (OPTIONAL):
 :html_tag   - set html tag (default: highlight)
 
   Example #1: :html_tag => "hl:code"    #=> <hl:code lang="bash"></hl:code> 
-  Example #2: :html_tag => "colorful"   #=> <colorfulcode lang="bash"></colorful>
+  Example #2: :html_tag => "colorful"   #=> <colorful lang="bash"></colorful>
  
 :html_attr  - set html tag's attribute (default: lang)
 
@@ -71,7 +71,7 @@ require "sinatra"
 
   __END__
 
-  @colorme
+  @@colorme
 
   <highlight lang="ruby">
 
