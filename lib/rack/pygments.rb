@@ -13,11 +13,11 @@ module Rack
         raise Exception, "Pygmentize is missing"
       end
     end
-    
+
     def call(env)
       if env["PATH_INFO"] !~ /.*\.css$/
       status, headers, response = @app.call(env)
-      content = response.instance_variable_get("@body").to_s
+      content = response.each.map.join
         document = Nokogiri::HTML(content)
         nodes = document.css(@tag)
         nodes.each do |node|
