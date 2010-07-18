@@ -5,7 +5,7 @@ module Rack
 
     def initialize(app, opts={})
       @app = app
-      @tag = opts[:html_tag].nil? ? 'highlight' : opts[:html_tag] 
+      @tag = opts[:html_tag].nil? ? 'highlight' : opts[:html_tag]
       @attr = opts[:html_attr].nil? ? 'lang' : opts[:html_attr]
       if system("which pygmentize > /dev/null")
         @bin = `which pygmentize`.chomp
@@ -15,22 +15,26 @@ module Rack
     end
 
     def call(env)
-      if env["PATH_INFO"] !~ /.*\.css$/
       status, headers, response = @app.call(env)
-      content = response.each.map.join
-        document = Nokogiri::HTML(content)
-        nodes = document.css(@tag)
-        nodes.each do |node|
-          lang = node.attribute(@attr).nil? ? 'bash' : node.attribute(@attr).value
-          pygmentize = `echo '#{node.content}' | #{@bin} -l #{lang} -f html`
-          node.replace(Nokogiri::HTML(pygmentize).css("div.highlight").first)
-        end
-        response = document.to_s
-        headers["Content-Length"] = response.length.to_s
-        [status,headers,[response]]
-      else
-        @app.call(env)
+      return [status, headers, response] unless pygmentize?(status, headers)
+      response_body = pygmentize(response.join)
+      headers["Content-Length"] = response_body.length.to_s
+      [status,headers,[response_body]]
+    end
+
+    def pygmentize?(status, headers)
+      status == 200 && headers['Content-Type'] =~ /html/
+    end
+
+    def pygmentize(content)
+      document = Nokogiri::HTML(content)
+      nodes = document.css(@tag)
+      nodes.each do |node|
+        lang = node.attribute(@attr).nil? ? 'bash' : node.attribute(@attr).value
+        pygmentized = `echo '#{node.content}' | #{@bin} -l #{lang} -f html`
+        node.replace(Nokogiri::HTML(pygmentized).css("div.highlight").first)
       end
+      document.to_s
     end
   end
 end

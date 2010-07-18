@@ -1,9 +1,10 @@
-task :default => :test
+require 'rubygems'
+require 'spec/rake/spectask'
 
-desc "Running the test"
-task :test do
- puts "This will be added soon. Run 'rake build install' to install gem"
-end
+desc "Run all specs in spec directory"
+Spec::Rake::SpecTask.new(:spec)
+
+task :default => :spec
 
 desc "Building a gem"
 
