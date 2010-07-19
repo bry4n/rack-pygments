@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spec/rake/spectask'
+require File.expand_path(File.dirname(__FILE__) + '/lib/rack/pygments/version')
 
 desc "Run all specs in spec directory"
 Spec::Rake::SpecTask.new(:spec)
@@ -15,11 +16,11 @@ namespace :gem do
 
   desc "Install the gem"
   task :install do
-    sh "gem install rack-pygments-0.1.gem"
+    sh "gem install rack-pygments-#{Rack::Pygments::Version::STRING}.gem"
   end
 end
 
 desc "Pushing gem to RubyGems.org"
 task :push do
-  sh "gem push rack-pygments-0.1.gem"
+  sh "gem push rack-pygments-#{Rack::Pygments::Version::STRING}.gem"
 end
