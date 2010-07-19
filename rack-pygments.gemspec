@@ -4,14 +4,14 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
 
   s.name        = 'rack-pygments'
-  s.version     = 0.2
+  s.version     = 0.3
   s.description = "rack-pygments - Rack Middleware for Pygments, the syntax highlighter"
   s.summary     = "rack-pygments"
 
-  s.authors = ['Bryan Goines']
+  s.authors = ['Bryan Goines', 'Matt Yoho']
   s.email = 'bryan@ffiirree.com'
 
-  s.files      = ["lib/rack/pygments/version.rb", "lib/rack/pygments.rb", "examples/sinatra", "examples/sinatra/app.rb", "examples/sinatra/config.ru", "examples/sinatra/public", "examples/sinatra/public/style.css", "LICENSE"]
+  s.files      = ["lib/rack/pygments/version.rb", "lib/rack/pygments.rb", "examples/sinatra", "examples/sinatra/public", "examples/sinatra/public/style.css", "examples/sinatra/app.rb", "examples/sinatra/config.ru", "LICENSE"]
   s.test_files = ["spec/lib/rack/pygments_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
 
   s.executables = []
