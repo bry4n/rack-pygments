@@ -2,7 +2,6 @@ require "nokogiri"
 
 module Rack
   class Pygments
-
     def initialize(app, opts={})
       @app = app
       @tag = opts[:html_tag].nil? ? 'highlight' : opts[:html_tag]
@@ -31,7 +30,15 @@ module Rack
       nodes = document.css(@tag)
       nodes.each do |node|
         lang = node.attribute(@attr).nil? ? 'bash' : node.attribute(@attr).value
-        pygmentized = `echo '#{node.content}' | #{@bin} -l #{lang} -f html`
+
+        file = Tempfile.new('pygments')
+        file.write node.content
+        file.close
+
+        pygmentized = `#{@bin} -l #{lang} -f html #{file.path}`
+
+        file.delete
+
         node.replace(Nokogiri::HTML(pygmentized).css("div.highlight").first)
       end
       document.to_s
