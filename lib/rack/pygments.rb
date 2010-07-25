@@ -1,4 +1,5 @@
 require "nokogiri"
+require "tempfile"
 
 module Rack
   class Pygments
